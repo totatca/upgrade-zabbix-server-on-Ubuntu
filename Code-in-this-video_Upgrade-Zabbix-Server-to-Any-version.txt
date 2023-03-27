@@ -1,0 +1,15 @@
+
+
+	mkdir -p /backup-zabbix/{conf-files,bin-files,doc-files,web-files,database-files}
+
+	cp -rp /etc/zabbix/zabbix_server.conf /backup-zabbix/conf-files && cp -rp /etc/httpd/conf.d/zabbix.conf /backup-zabbix/conf-files 2>/dev/null && cp -rp /etc/apache2/conf-enabled/zabbix.conf /backup-zabbix/conf-files 2>/dev/null && cp -rp /etc/zabbix/php-fpm.conf /backup-zabbix/conf-files 2>/dev/null && cp -rp /usr/sbin/zabbix_server /backup-zabbix/bin-files && cp -rp /usr/share/doc/zabbix-* /backup-zabbix/doc-files &&  cp -rp /usr/share/zabbix/ /backup-zabbix//web-files
+
+	mysqldump -uroot -p --single-transaction 'zabbixdb' > /backup-zabbix/database-files/zabbix-backup.sql
+
+	rm -Rf /etc/apt/sources.list.d/zabbix.list
+
+	https://repo.zabbix.com/
+
+	apt install --only-upgrade zabbix-server-mysql zabbix-frontend-php zabbix-agent -y
+
+	apt install zabbix-apache-conf -y
